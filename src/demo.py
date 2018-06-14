@@ -19,13 +19,16 @@ def main():
   input_var = torch.autograd.Variable(input).float().cuda()
   output = model(input_var)
   pred = getPreds((output[-2].data).cpu().numpy())[0] * 4
-  reg = (output[-1].data).cpu().numpy().reshape(pred.shape[0], 1)
+#   reg = (output[-1].data).cpu().numpy().reshape(pred.shape[0], 1)
   debugger = Debugger()
   debugger.addImg((input[0].numpy().transpose(1, 2, 0)*256).astype(np.uint8))
   debugger.addPoint2D(pred, (255, 0, 0))
-  debugger.addPoint3D(np.concatenate([pred, (reg + 1) / 2. * 256], axis = 1))
-  debugger.showImg(pause = True)
-  debugger.show3D()
+#   debugger.addPoint3D(np.concatenate([pred, (reg + 1) / 2. * 256], axis = 1))
+#   debugger.showImg(pause = True)
+#   debugger.show3D()
+  debugger.saveImg()
+  print(pred)
+  print(len(output),output[0].data.cpu().numpy().shape)
 
 if __name__ == '__main__':
   main()
